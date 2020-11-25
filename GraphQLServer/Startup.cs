@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GraphQL.Types;
 using GraphQLServer.DAL;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -10,6 +11,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using GraphQL;
+using GraphQLServer.Types;
 
 namespace GraphQLServer
 {
@@ -28,7 +31,13 @@ namespace GraphQLServer
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers()
+                .AddNewtonsoftJson();
+
+            services.AddSingleton<IDocumentExecuter, DocumentExecuter>();
+            services.AddSingleton<SubmissionType>();
+            services.AddSingleton<SubmissionQuery>();
+            services.AddScoped<ISchema, SubmissionSchema>();
 
             services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:ApplicationDatabase"]));
         }
@@ -36,7 +45,8 @@ namespace GraphQLServer
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ApplicationContext applicationContext)
         {
-            if (env.IsDevelopment())
+
+            if (env.IsEnvironment("Local"))
             {
                 app.UseDeveloperExceptionPage();
             }
@@ -44,6 +54,9 @@ namespace GraphQLServer
             applicationContext.Database.Migrate();
 
             app.UseRouting();
+
+            app.UseGraphiQLServer();
+            app.UseGraphQLAltair();
 
             app.UseEndpoints(endpoints =>
             {
