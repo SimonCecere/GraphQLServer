@@ -9,6 +9,8 @@
     <PackageReference Include="GraphQL" Version="3.1.5" />
     <PackageReference Include="GraphQL.Server.Ui.Altair" Version="4.3.1" />
     <PackageReference Include="GraphQL.Server.Ui.GraphiQL" Version="4.3.1" />
+    <PackageReference Include="GraphQL.Server.Ui.Playground" Version="4.3.1" />
+    <PackageReference Include="GraphQL.Server.Ui.Voyager" Version="4.3.1" />
     <PackageReference Include="GraphQL.SystemTextJson" Version="3.1.5" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.0" />

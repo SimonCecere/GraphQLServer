@@ -54,9 +54,13 @@ namespace GraphQLServer
             applicationContext.Database.Migrate();
 
             app.UseRouting();
-
-            app.UseGraphiQLServer();
-            app.UseGraphQLAltair();
+            
+            if (!env.IsProduction())
+            {
+                app.UseGraphQLVoyager(); //Interesting map view.
+                app.UseGraphQLPlayground(); //Simple and clean design 
+                app.UseGraphQLAltair(); //Smooth UI
+            }
 
             app.UseEndpoints(endpoints =>
             {

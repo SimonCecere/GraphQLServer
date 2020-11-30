@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.IO;
 using System.Text;
 using System.ComponentModel.DataAnnotations;
+using Newtonsoft.Json;
+using System.ComponentModel;
 
 namespace GraphQLServer.Controllers
 {
@@ -26,7 +28,7 @@ namespace GraphQLServer.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] [Bind]GraphQLQueryObject payload)
+        public async Task<IActionResult> Post([FromBody] GraphQLQueryObject payload)
         {
             var result = await _executer.ExecuteAsync(_ =>
             {
@@ -44,8 +46,14 @@ namespace GraphQLServer.Controllers
 
         public class GraphQLQueryObject
         {
-            public string OperationName { get; set; }        
+            [DisplayName("operationName")]
+            public string OperationName { get; set; }      
+            
+            [Required] //I think this is safe. Will test with further adventures.
+            [DisplayName("query")]
             public string Query { get; set; }
+
+            [DisplayName("variables")]
             public Object Variables { get; set; }
         }
     }
