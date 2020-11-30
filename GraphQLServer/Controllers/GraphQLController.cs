@@ -4,10 +4,14 @@ using GraphQL;
 using GraphQL.Types;
 using GraphQL.SystemTextJson;
 using Microsoft.AspNetCore.Mvc;
+using System.IO;
+using System.Text;
+using System.ComponentModel.DataAnnotations;
 
 namespace GraphQLServer.Controllers
 {
     [Route("[controller]")]
+    [ApiController]
     public class GraphQLController : Controller
     {
 
@@ -22,36 +26,27 @@ namespace GraphQLServer.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] GraphQLQueryObject query)
+        public async Task<IActionResult> Post([FromBody] [Bind]GraphQLQueryObject payload)
         {
-
-            var request = Request;
-
             var result = await _executer.ExecuteAsync(_ =>
             {
                 _.Schema = _schema;
-                _.Query = query.Query;
+                _.Query = payload.Query;
             });
 
             if (result.Errors?.Count > 0)
             {
-                return BadRequest(result.Errors);
+                return BadRequest(new { Errors = result.Errors, Data = result.Data }); //Return error with data according to GRAPHQL spec
             }
 
-            if (result.Operation.Name == "IntrospectionQuery")
-            {
-                return Ok(new { Data = result.Data });
-            }
-
-            return Ok(result.Data);
+            return Ok(new { Data = result.Data }); //All data should be return in a data field
         }
 
         public class GraphQLQueryObject
         {
-            public string OperationName { get; set; }
-            public string NamedQuery { get; set; }
+            public string OperationName { get; set; }        
             public string Query { get; set; }
-            public string Variables { get; set; }
+            public Object Variables { get; set; }
         }
     }
 }
