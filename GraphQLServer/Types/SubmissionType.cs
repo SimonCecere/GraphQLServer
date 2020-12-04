@@ -1,4 +1,5 @@
 ﻿using GraphQL.Types;
+using GraphQLServer.DAL;
 using GraphQLServer.DbModels;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ namespace GraphQLServer.Types
 {
     public class SubmissionType : ObjectGraphType<Submission>
     {
-        public SubmissionType()
+        public SubmissionType(ApplicationContext applicationContext)
         {
             Name = "Submission";
             Description = "A submission from a client for an item fulfillment.";
@@ -27,6 +28,14 @@ namespace GraphQLServer.Types
             Field(x => x.Email).Description("The email of the Submission.");
             Field(x => x.Phone).Description("The phone number of the Submission.");
             Field(x => x.Status).Description("The phone number of the Submission.");
+            
+            Field<ListGraphType<ItemOrderType>>()
+                .Name("ItemOrders")
+                .Description("The Item Orders")
+                .Resolve((context) =>
+                {
+                    return applicationContext.ItemOrder.Where(x => x.SubmissionId == context.Source.Id);
+                });
         }
     }
 }

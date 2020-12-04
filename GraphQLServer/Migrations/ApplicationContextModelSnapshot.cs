@@ -19,6 +19,94 @@ namespace GraphQLServer.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.0");
 
+            modelBuilder.Entity("GraphQLServer.DbModels.ItemOrder", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("QTY")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ShippedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("SubmissionId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TrackingNumber")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("SubmissionId");
+
+                    b.ToTable("ItemOrder");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ProductId = 2,
+                            QTY = 5,
+                            ShippedDateTime = new DateTime(2020, 12, 3, 23, 29, 48, 324, DateTimeKind.Local).AddTicks(3509),
+                            SubmissionId = 2,
+                            TrackingNumber = "1Z204E380338943508"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ProductId = 1,
+                            QTY = 3,
+                            ShippedDateTime = new DateTime(2020, 12, 3, 23, 29, 48, 324, DateTimeKind.Local).AddTicks(4219),
+                            SubmissionId = 2,
+                            TrackingNumber = "1Z204E380338943508"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            ProductId = 3,
+                            QTY = 7,
+                            ShippedDateTime = new DateTime(2020, 12, 3, 23, 29, 48, 324, DateTimeKind.Local).AddTicks(4240),
+                            SubmissionId = 2,
+                            TrackingNumber = "1Z204E380338943587"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            ProductId = 2,
+                            QTY = 5,
+                            ShippedDateTime = new DateTime(2020, 12, 3, 23, 29, 48, 324, DateTimeKind.Local).AddTicks(4244),
+                            SubmissionId = 3,
+                            TrackingNumber = "1Z204E380338945687"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            ProductId = 1,
+                            QTY = 10,
+                            ShippedDateTime = new DateTime(2020, 12, 3, 23, 29, 48, 324, DateTimeKind.Local).AddTicks(4278),
+                            SubmissionId = 3,
+                            TrackingNumber = "1Z204E380338945687"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            ProductId = 3,
+                            QTY = 2,
+                            ShippedDateTime = new DateTime(2020, 12, 3, 23, 29, 48, 324, DateTimeKind.Local).AddTicks(4282),
+                            SubmissionId = 1,
+                            TrackingNumber = "1Z204E380338945987"
+                        });
+                });
+
             modelBuilder.Entity("GraphQLServer.DbModels.Product", b =>
                 {
                     b.Property<int>("Id")
@@ -51,31 +139,35 @@ namespace GraphQLServer.Migrations
                         .HasFilter("[SKU] IS NOT NULL");
 
                     b.ToTable("Product");
-                });
 
-            modelBuilder.Entity("GraphQLServer.DbModels.ProductOrder", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("QTY")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SubmissionId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
-
-                    b.HasIndex("SubmissionId");
-
-                    b.ToTable("ProductOrder");
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Buffer = 20,
+                            Description = "Elder Wand",
+                            Inventory = 1000,
+                            MethodOfShipment = "UPS",
+                            SKU = "EW02112152"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Buffer = 10,
+                            Description = "Philosophy 101",
+                            Inventory = 200,
+                            MethodOfShipment = "UPS",
+                            SKU = "PH02112101"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Buffer = 10,
+                            Description = "Cookie Dough",
+                            Inventory = 600,
+                            MethodOfShipment = "UPS",
+                            SKU = "CD02112613"
+                        });
                 });
 
             modelBuilder.Entity("GraphQLServer.DbModels.Submission", b =>
@@ -149,7 +241,7 @@ namespace GraphQLServer.Migrations
                             City = "Grand Rapids",
                             ClientSubmissionId = "4564123456789456",
                             CountryCode = "USA",
-                            DateTime = new DateTime(2020, 11, 23, 22, 35, 11, 966, DateTimeKind.Local).AddTicks(4118),
+                            DateTime = new DateTime(2020, 12, 3, 23, 29, 48, 321, DateTimeKind.Local).AddTicks(7943),
                             Email = "culvers@example.com",
                             FirstName = "John",
                             LastName = "Doe",
@@ -165,7 +257,7 @@ namespace GraphQLServer.Migrations
                             City = "London",
                             ClientSubmissionId = "7893541231456654",
                             CountryCode = "GBR",
-                            DateTime = new DateTime(2020, 11, 23, 22, 35, 11, 968, DateTimeKind.Local).AddTicks(7449),
+                            DateTime = new DateTime(2020, 12, 3, 23, 29, 48, 324, DateTimeKind.Local).AddTicks(1857),
                             Email = "alan@example.com",
                             FirstName = "Alan",
                             LastName = "Watts",
@@ -181,10 +273,10 @@ namespace GraphQLServer.Migrations
                             City = "Orlando",
                             ClientSubmissionId = "7893541231456654",
                             CountryCode = "USA",
-                            DateTime = new DateTime(2020, 11, 23, 22, 35, 11, 968, DateTimeKind.Local).AddTicks(7536),
-                            Email = "harrypotter@hogwarts.com",
-                            FirstName = "Harry",
-                            LastName = "Potter",
+                            DateTime = new DateTime(2020, 12, 3, 23, 29, 48, 324, DateTimeKind.Local).AddTicks(1944),
+                            Email = "AlbusD@hogwarts.com",
+                            FirstName = "Albus",
+                            LastName = "Dumbledore",
                             Phone = "6125555555",
                             PostalCode = "32819",
                             State = "FL",
@@ -192,31 +284,7 @@ namespace GraphQLServer.Migrations
                         });
                 });
 
-            modelBuilder.Entity("GraphQLServer.DbModels.TrackingInformation", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<DateTime>("ShippedDateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("SubmissionId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("TrackingNumber")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SubmissionId");
-
-                    b.ToTable("TrackingInformation");
-                });
-
-            modelBuilder.Entity("GraphQLServer.DbModels.ProductOrder", b =>
+            modelBuilder.Entity("GraphQLServer.DbModels.ItemOrder", b =>
                 {
                     b.HasOne("GraphQLServer.DbModels.Product", "Product")
                         .WithMany()
@@ -231,17 +299,6 @@ namespace GraphQLServer.Migrations
                         .IsRequired();
 
                     b.Navigation("Product");
-
-                    b.Navigation("Submission");
-                });
-
-            modelBuilder.Entity("GraphQLServer.DbModels.TrackingInformation", b =>
-                {
-                    b.HasOne("GraphQLServer.DbModels.Submission", "Submission")
-                        .WithMany()
-                        .HasForeignKey("SubmissionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
 
                     b.Navigation("Submission");
                 });

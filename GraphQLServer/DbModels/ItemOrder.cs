@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 namespace GraphQLServer.DbModels
 {
 
-    [Table("ProductOrder")]
-    public class ProductOrder
+    [Table("ItemOrder")]
+    public class ItemOrder
     {
         [Key]
         public int Id { get; set; }
@@ -23,6 +23,11 @@ namespace GraphQLServer.DbModels
         public int ProductId { get; set; }
 
         public int QTY { get; set; }
+
+        public DateTime? ShippedDateTime { get; set; }
+
+        [MaxLength(255)]
+        public string TrackingNumber { get; set; }
 
     }
 }

@@ -13,8 +13,7 @@ namespace GraphQLServer.DAL
 
         public virtual DbSet<Submission> Submission { get; set; }
         public virtual DbSet<Product> Product { get; set; }
-        public virtual DbSet<ProductOrder> ProductOrder { get; set; }
-        public virtual DbSet<TrackingInformation> TrackingInformation { get; set; }
+        public virtual DbSet<ItemOrder> ItemOrder { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -23,6 +22,37 @@ namespace GraphQLServer.DAL
             modelBuilder.Entity<Product>(entity => {
                 entity.HasIndex(e => e.SKU).IsUnique();
             });
+
+            //Seed some item orders
+            modelBuilder.Entity<Product>().HasData(
+                new Product()
+                {
+                    Id = 1,
+                    Description = "Elder Wand",
+                    SKU = "EW02112152",
+                    MethodOfShipment = "UPS",
+                    Inventory = 1000,
+                    Buffer = 20,
+                },
+                new Product()
+                {
+                    Id = 2,
+                    Description = "Philosophy 101",
+                    SKU = "PH02112101",
+                    MethodOfShipment = "UPS",
+                    Inventory = 200,
+                    Buffer = 10,
+                },
+                new Product()
+                {
+                    Id = 3,
+                    Description = "Cookie Dough",
+                    SKU = "CD02112613",
+                    MethodOfShipment = "UPS",
+                    Inventory = 600,
+                    Buffer = 10,
+                }
+             );
 
             //Seed some submissions
             modelBuilder.Entity<Submission>().HasData(
@@ -63,18 +93,75 @@ namespace GraphQLServer.DAL
                     Id = 3,
                     ClientSubmissionId = "7893541231456654",
                     DateTime = DateTime.Now,
-                    FirstName = "Harry",
-                    LastName = "Potter",
+                    FirstName = "Albus",
+                    LastName = "Dumbledore",
                     Address1 = "6000 Universal Blvd",
                     City = "Orlando",
                     State = "FL",
                     PostalCode = "32819",
                     CountryCode = "USA",
-                    Email = "harrypotter@hogwarts.com",
+                    Email = "AlbusD@hogwarts.com",
                     Phone = "6125555555",
                     Status = "PENDING"
                 }
                 );
+
+            modelBuilder.Entity<ItemOrder>().HasData(
+                new ItemOrder()
+                {
+                    Id = 1,
+                    SubmissionId = 2,
+                    ProductId = 2,
+                    QTY = 5,
+                    ShippedDateTime = DateTime.Now,
+                    TrackingNumber = "1Z204E380338943508"
+                },
+                new ItemOrder()
+                {
+                    Id = 2,
+                    SubmissionId = 2,
+                    ProductId = 1,
+                    QTY = 3,
+                    ShippedDateTime = DateTime.Now,
+                    TrackingNumber = "1Z204E380338943508"
+                },
+                new ItemOrder()
+                {
+                    Id = 3,
+                    SubmissionId = 2,
+                    ProductId = 3,
+                    QTY = 7,
+                    ShippedDateTime = DateTime.Now,
+                    TrackingNumber = "1Z204E380338943587"
+                },
+                new ItemOrder()
+                {
+                    Id = 4,
+                    SubmissionId = 3,
+                    ProductId = 2,
+                    QTY = 5,
+                    ShippedDateTime = DateTime.Now,
+                    TrackingNumber = "1Z204E380338945687"
+                },
+                new ItemOrder()
+                {
+                    Id = 5,
+                    SubmissionId = 3,
+                    ProductId = 1,
+                    QTY = 10,
+                    ShippedDateTime = DateTime.Now,
+                    TrackingNumber = "1Z204E380338945687"
+                },
+                new ItemOrder()
+                {
+                    Id = 6,
+                    SubmissionId = 1,
+                    ProductId = 3,
+                    QTY = 2,
+                    ShippedDateTime = DateTime.Now,
+                    TrackingNumber = "1Z204E380338945987"
+                }
+             );
 
             base.OnModelCreating(modelBuilder);
         }

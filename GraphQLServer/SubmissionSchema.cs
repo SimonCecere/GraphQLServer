@@ -11,7 +11,7 @@ namespace GraphQLServer
     {
         public SubmissionSchema(IServiceProvider serviceProvider) : base(serviceProvider)
         {
-            Query = serviceProvider.GetRequiredService<SubmissionQuery>();
+            Query = serviceProvider.GetRequiredService<RootQuery>();
         }
     }
 }

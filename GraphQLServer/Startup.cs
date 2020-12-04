@@ -36,7 +36,9 @@ namespace GraphQLServer
 
             services.AddSingleton<IDocumentExecuter, DocumentExecuter>();
             services.AddSingleton<SubmissionType>();
-            services.AddSingleton<SubmissionQuery>();
+            services.AddSingleton<ItemOrderType>();
+            services.AddSingleton<ProductType>();
+            services.AddSingleton<RootQuery>();
             services.AddScoped<ISchema, SubmissionSchema>();
 
             services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:ApplicationDatabase"]));
