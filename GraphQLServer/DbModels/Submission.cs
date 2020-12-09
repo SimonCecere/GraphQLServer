@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -16,7 +17,8 @@ namespace GraphQLServer.DbModels
 
         [MaxLength(36)]
         [Column("ClientSubmissionId")]
-        public string ClientSubmissionId { get; set; }
+        [JsonProperty("SubmissionId")]
+        public string SubmissionId { get; set; }
 
         public DateTime DateTime { get; set; }
 
@@ -53,5 +55,6 @@ namespace GraphQLServer.DbModels
         [MaxLength(45)]
         public string Status { get; set; }
 
+        public virtual List<ItemOrder> ItemOrders { get; set; }
     }
 }

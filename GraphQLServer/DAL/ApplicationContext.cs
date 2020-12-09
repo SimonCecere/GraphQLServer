@@ -59,7 +59,7 @@ namespace GraphQLServer.DAL
                 new Submission()
                 {
                     Id = 1,
-                    ClientSubmissionId = "4564123456789456",
+                    SubmissionId = "4564123456789456",
                     DateTime = DateTime.Now,
                     FirstName = "John",
                     LastName = "Doe",
@@ -75,7 +75,7 @@ namespace GraphQLServer.DAL
                 new Submission()
                 {
                     Id = 2,
-                    ClientSubmissionId = "7893541231456654",
+                    SubmissionId = "7893541231456654",
                     DateTime = DateTime.Now,
                     FirstName = "Alan",
                     LastName = "Watts",
@@ -91,7 +91,7 @@ namespace GraphQLServer.DAL
                 new Submission()
                 {
                     Id = 3,
-                    ClientSubmissionId = "7893541231456654",
+                    SubmissionId = "7893541231456654",
                     DateTime = DateTime.Now,
                     FirstName = "Albus",
                     LastName = "Dumbledore",
@@ -112,7 +112,7 @@ namespace GraphQLServer.DAL
                     Id = 1,
                     SubmissionId = 2,
                     ProductId = 2,
-                    QTY = 5,
+                    Quantity = 5,
                     ShippedDateTime = DateTime.Now,
                     TrackingNumber = "1Z204E380338943508"
                 },
@@ -121,7 +121,7 @@ namespace GraphQLServer.DAL
                     Id = 2,
                     SubmissionId = 2,
                     ProductId = 1,
-                    QTY = 3,
+                    Quantity = 3,
                     ShippedDateTime = DateTime.Now,
                     TrackingNumber = "1Z204E380338943508"
                 },
@@ -130,7 +130,7 @@ namespace GraphQLServer.DAL
                     Id = 3,
                     SubmissionId = 2,
                     ProductId = 3,
-                    QTY = 7,
+                    Quantity = 7,
                     ShippedDateTime = DateTime.Now,
                     TrackingNumber = "1Z204E380338943587"
                 },
@@ -139,7 +139,7 @@ namespace GraphQLServer.DAL
                     Id = 4,
                     SubmissionId = 3,
                     ProductId = 2,
-                    QTY = 5,
+                    Quantity = 5,
                     ShippedDateTime = DateTime.Now,
                     TrackingNumber = "1Z204E380338945687"
                 },
@@ -148,7 +148,7 @@ namespace GraphQLServer.DAL
                     Id = 5,
                     SubmissionId = 3,
                     ProductId = 1,
-                    QTY = 10,
+                    Quantity = 10,
                     ShippedDateTime = DateTime.Now,
                     TrackingNumber = "1Z204E380338945687"
                 },
@@ -157,7 +157,7 @@ namespace GraphQLServer.DAL
                     Id = 6,
                     SubmissionId = 1,
                     ProductId = 3,
-                    QTY = 2,
+                    Quantity = 2,
                     ShippedDateTime = DateTime.Now,
                     TrackingNumber = "1Z204E380338945987"
                 }

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace GraphQLServer.Types
+namespace GraphQLServer.Schema.Types
 {
     public class ProductType : ObjectGraphType<Product>
     {

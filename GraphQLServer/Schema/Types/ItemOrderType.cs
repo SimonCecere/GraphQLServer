@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace GraphQLServer.Types
+namespace GraphQLServer.Schema.Types
 {
     public class ItemOrderType : ObjectGraphType<ItemOrder>
     {
@@ -15,7 +15,7 @@ namespace GraphQLServer.Types
             Name = "ItemOrder";
             Description = "A item order for a submission.";
             Field(x => x.Id).Description("The Id of the item order.");
-            Field(x => x.QTY).Name("quantity").Description("The quantity of the product for the item order.");
+            Field(x => x.Quantity).Name("quantity").Description("The quantity of the product for the item order.");
             
             Field<ProductType>()
                 .Name("Product")

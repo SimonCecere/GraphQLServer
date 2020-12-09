@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -16,13 +17,14 @@ namespace GraphQLServer.DbModels
 
         [ForeignKey("SubmissionId")]
         public Submission Submission { get; set; }
+        [JsonIgnore]
         public int SubmissionId { get; set; }
 
         [ForeignKey("ProductId")]
         public Product Product { get; set; }
         public int ProductId { get; set; }
 
-        public int QTY { get; set; }
+        public int Quantity { get; set; }
 
         public DateTime? ShippedDateTime { get; set; }
 

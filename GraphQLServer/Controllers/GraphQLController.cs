@@ -9,6 +9,7 @@ using System.Text;
 using System.ComponentModel.DataAnnotations;
 using Newtonsoft.Json;
 using System.ComponentModel;
+using Newtonsoft.Json.Linq;
 
 namespace GraphQLServer.Controllers
 {
@@ -30,10 +31,14 @@ namespace GraphQLServer.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] GraphQLQueryObject payload)
         {
+            var inputs = payload.Variables?.ToString().ToInputs();
+
             var result = await _executer.ExecuteAsync(_ =>
             {
                 _.Schema = _schema;
                 _.Query = payload.Query;
+                _.OperationName = payload.OperationName;
+                _.Inputs = inputs;
             });
 
             if (result.Errors?.Count > 0)
@@ -41,7 +46,7 @@ namespace GraphQLServer.Controllers
                 return BadRequest(new { Errors = result.Errors, Data = result.Data }); //Return error with data according to GRAPHQL spec
             }
 
-            return Ok(new { Data = result.Data }); //All data should be return in a data field
+            return Ok(new { Data = result.Data }); //All data should be returned in a data field
         }
 
         public class GraphQLQueryObject
@@ -54,7 +59,7 @@ namespace GraphQLServer.Controllers
             public string Query { get; set; }
 
             [DisplayName("variables")]
-            public Object Variables { get; set; }
+            public JObject Variables { get; set; }
         }
     }
 }

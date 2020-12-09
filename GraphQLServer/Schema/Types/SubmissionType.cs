@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace GraphQLServer.Types
+namespace GraphQLServer.Schema.Types
 {
     public class SubmissionType : ObjectGraphType<Submission>
     {
@@ -15,7 +15,7 @@ namespace GraphQLServer.Types
             Name = "Submission";
             Description = "A submission from a client for an item fulfillment.";
             Field(x => x.Id).Description("The Id of the Submission.");
-            Field(x => x.ClientSubmissionId).Description("The unique id the client passed for a Submission.");
+            Field(x => x.SubmissionId).Description("The unique id the client passed for a Submission.");
             Field(x => x.DateTime).Description("The date time of the Submission.");
             Field(x => x.FirstName).Description("The first name of the Submission.");
             Field(x => x.LastName).Description("The last name of the Submission.");

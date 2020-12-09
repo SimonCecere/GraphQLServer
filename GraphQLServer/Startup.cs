@@ -1,18 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using GraphQL.Types;
 using GraphQLServer.DAL;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using GraphQL;
-using GraphQLServer.Types;
+using GraphQLServer.Schema.Types;
+using GraphQLServer.Schema;
+using GraphQLServer.Schema.InputTypes;
 
 namespace GraphQLServer
 {
@@ -35,10 +32,19 @@ namespace GraphQLServer
                 .AddNewtonsoftJson();
 
             services.AddSingleton<IDocumentExecuter, DocumentExecuter>();
+            
+            //Types
             services.AddSingleton<SubmissionType>();
             services.AddSingleton<ItemOrderType>();
             services.AddSingleton<ProductType>();
+
+            //Input Types
+            services.AddSingleton<SubmissionInputType>();
+            services.AddSingleton<ItemOrderInputType>();
+
+            //Schema
             services.AddSingleton<RootQuery>();
+            services.AddSingleton<Mutation>();
             services.AddScoped<ISchema, SubmissionSchema>();
 
             services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:ApplicationDatabase"]));
