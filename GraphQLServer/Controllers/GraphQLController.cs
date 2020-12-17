@@ -10,6 +10,7 @@ using System.ComponentModel.DataAnnotations;
 using Newtonsoft.Json;
 using System.ComponentModel;
 using Newtonsoft.Json.Linq;
+using System.Diagnostics;
 
 namespace GraphQLServer.Controllers
 {
@@ -20,11 +21,13 @@ namespace GraphQLServer.Controllers
 
         private readonly ISchema _schema;
         private readonly IDocumentExecuter _executer;
+        private readonly IDocumentWriter _writer;
 
-        public GraphQLController(ISchema schema, IDocumentExecuter executer)
+        public GraphQLController(ISchema schema, IDocumentExecuter executer, IDocumentWriter writer)
         {
             _schema = schema; //referenced in start up
             _executer = executer;
+            _writer = writer;
         }
 
 
@@ -41,12 +44,17 @@ namespace GraphQLServer.Controllers
                 _.Inputs = inputs;
             });
 
+            //Serialize result into JSON string based on result that is produced
+            var jsonString = await _writer.WriteToStringAsync(result);
+            var jsonObject = JObject.Parse(jsonString);
+
             if (result.Errors?.Count > 0)
             {
-                return BadRequest(new { Errors = result.Errors, Data = result.Data }); //Return error with data according to GRAPHQL spec
+                //Return error with data according to GRAPHQL spec
+                return BadRequest(jsonObject); 
             }
 
-            return Ok(new { Data = result.Data }); //All data should be returned in a data field
+            return Ok(jsonObject);
         }
 
         public class GraphQLQueryObject

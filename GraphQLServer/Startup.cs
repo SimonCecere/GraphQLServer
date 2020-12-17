@@ -10,6 +10,9 @@ using GraphQL;
 using GraphQLServer.Schema.Types;
 using GraphQLServer.Schema;
 using GraphQLServer.Schema.InputTypes;
+using GraphQL.Execution;
+using Microsoft.Extensions.Options;
+using GraphQL.SystemTextJson;
 
 namespace GraphQLServer
 {
@@ -32,7 +35,12 @@ namespace GraphQLServer
                 .AddNewtonsoftJson();
 
             services.AddSingleton<IDocumentExecuter, DocumentExecuter>();
-            
+            services.AddSingleton<IDocumentWriter, DocumentWriter>();
+            services.AddSingleton<IErrorInfoProvider>(services =>
+            {
+                return new ErrorInfoProvider(new ErrorInfoProviderOptions { ExposeExceptionStackTrace = false });
+            });
+
             //Types
             services.AddSingleton<SubmissionType>();
             services.AddSingleton<ItemOrderType>();
@@ -54,10 +62,10 @@ namespace GraphQLServer
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ApplicationContext applicationContext)
         {
 
-            if (env.IsEnvironment("Local"))
-            {
-                app.UseDeveloperExceptionPage();
-            }
+            //if (env.IsEnvironment("Local"))
+            //{
+            //    app.UseDeveloperExceptionPage();
+            //}
 
             applicationContext.Database.Migrate();
 
