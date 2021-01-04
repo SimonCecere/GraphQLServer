@@ -44,6 +44,7 @@ namespace GraphQLServer.Controllers
                 _.Inputs = inputs;
             });
 
+            //The result already comes out as an object. However IDocumentWriter pulls out what should be returned out of that object.
             //Serialize result into JSON string based on result that is produced
             var jsonString = await _writer.WriteToStringAsync(result);
             var jsonObject = JObject.Parse(jsonString);

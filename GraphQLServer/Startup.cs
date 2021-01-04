@@ -62,10 +62,10 @@ namespace GraphQLServer
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ApplicationContext applicationContext)
         {
 
-            //if (env.IsEnvironment("Local"))
-            //{
-            //    app.UseDeveloperExceptionPage();
-            //}
+            if (env.IsEnvironment("Local"))
+            {
+                app.UseDeveloperExceptionPage();
+            }
 
             applicationContext.Database.Migrate();
 
